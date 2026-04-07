@@ -3,7 +3,8 @@
     "allow": [
       "WebFetch(domain:tripss.ca)",
       "Bash(npm init:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(wsl --status)"
     ]
   }
 }
