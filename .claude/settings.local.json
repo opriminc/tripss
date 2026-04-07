@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:tripss.ca)"
+      "WebFetch(domain:tripss.ca)",
+      "Bash(npm init:*)",
+      "Bash(npm install:*)"
     ]
   }
 }
