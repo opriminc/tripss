@@ -38,6 +38,7 @@ export const places = pgTable('places', {
   metaDescription: varchar('meta_description', { length: 500 }),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
+  deletedAt: timestamp('deleted_at'),
 }, (table) => [
   uniqueIndex('places_region_slug_idx').on(table.regionId, table.slug),
   index('places_region_active_idx').on(table.regionId, table.isActive),

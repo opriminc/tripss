@@ -12,6 +12,7 @@ export const placeImages = pgTable('place_images', {
   width: integer('width'),
   height: integer('height'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
+  deletedAt: timestamp('deleted_at'),
 }, (table) => [
   index('place_images_place_order_idx').on(table.placeId, table.displayOrder),
 ])

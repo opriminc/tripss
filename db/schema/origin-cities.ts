@@ -11,6 +11,7 @@ export const originCities = pgTable('origin_cities', {
   lng: decimal('lng', { precision: 10, scale: 7 }).$type<number>().notNull(),
   isDefault: boolean('is_default').notNull().default(false),
   createdAt: timestamp('created_at').notNull().defaultNow(),
+  deletedAt: timestamp('deleted_at'),
 }, (table) => [
   uniqueIndex('origin_cities_region_slug_idx').on(table.regionId, table.slug),
 ])

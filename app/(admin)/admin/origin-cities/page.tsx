@@ -1,18 +1,18 @@
 import { createAdminClient } from '@/lib/supabase/server'
-import { createOriginCity, deleteOriginCity } from '@/app/actions/admin'
-import { PageHeader, DataTable, Td, FormGroup, Input, Select, Card, ActionForm, DeleteButton } from '../_components/admin-ui'
+import { createOriginCity, updateOriginCity, deleteOriginCity } from '@/app/actions/admin'
+import { PageHeader, DataTable, Td, FormGroup, Input, Select, Card, ActionForm, EditableRow } from '../_components/admin-ui'
 
 export default async function OriginCitiesPage() {
   const supabase = createAdminClient()
   const [{ data: cities }, { data: regions }] = await Promise.all([
-    supabase.from('origin_cities').select('*, regions(name)').order('name'),
-    supabase.from('regions').select('id, name').order('name'),
+    supabase.from('origin_cities').select('*, regions(name)').is('deleted_at', null).order('name'),
+    supabase.from('regions').select('id, name').is('deleted_at', null).order('name'),
   ])
+  const regionOptions = regions?.map(r => ({ value: r.id, label: r.name })) ?? []
 
   return (
     <div>
       <PageHeader title="Origin Cities" />
-
       <Card>
         <h3 style={{ margin: '0 0 16px', fontSize: '16px', fontWeight: 600 }}>Add Origin City</h3>
         <ActionForm action={createOriginCity} submitLabel="Create City">
@@ -33,18 +33,30 @@ export default async function OriginCitiesPage() {
           </div>
         </ActionForm>
       </Card>
-
       <div style={{ marginTop: '24px' }}>
         <DataTable headers={['Name', 'Slug', 'Region', 'Lat/Lng', 'Default', 'Actions']}>
           {cities?.map(c => (
-            <tr key={c.id}>
-              <Td>{c.name}</Td>
-              <Td>{c.slug}</Td>
-              <Td>{(c.regions as { name: string } | null)?.name}</Td>
-              <Td>{c.lat}, {c.lng}</Td>
-              <Td>{c.is_default ? 'Yes' : 'No'}</Td>
-              <Td><DeleteButton action={deleteOriginCity} id={c.id} /></Td>
-            </tr>
+            <EditableRow
+              key={c.id}
+              id={c.id}
+              editAction={updateOriginCity}
+              deleteAction={deleteOriginCity}
+              fields={[
+                { name: 'region_id', value: c.region_id, options: regionOptions },
+                { name: 'name', value: c.name },
+                { name: 'slug', value: c.slug },
+                { name: 'lat', value: c.lat, type: 'number' },
+                { name: 'lng', value: c.lng, type: 'number' },
+                { name: 'is_default', value: String(c.is_default), options: [{ value: 'true', label: 'Yes' }, { value: 'false', label: 'No' }] },
+              ]}
+              renderView={<>
+                <Td>{c.name}</Td>
+                <Td>{c.slug}</Td>
+                <Td>{(c.regions as { name: string } | null)?.name}</Td>
+                <Td>{c.lat}, {c.lng}</Td>
+                <Td>{c.is_default ? 'Yes' : 'No'}</Td>
+              </>}
+            />
           ))}
         </DataTable>
       </div>

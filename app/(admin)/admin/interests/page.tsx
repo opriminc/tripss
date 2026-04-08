@@ -1,15 +1,14 @@
 import { createAdminClient } from '@/lib/supabase/server'
-import { createInterest, deleteInterest } from '@/app/actions/admin'
-import { PageHeader, DataTable, Td, FormGroup, Input, Card, ActionForm, DeleteButton } from '../_components/admin-ui'
+import { createInterest, updateInterest, deleteInterest } from '@/app/actions/admin'
+import { PageHeader, DataTable, Td, FormGroup, Input, Card, ActionForm, EditableRow } from '../_components/admin-ui'
 
 export default async function InterestsPage() {
   const supabase = createAdminClient()
-  const { data: interests } = await supabase.from('interests').select('*').order('display_order')
+  const { data: interests } = await supabase.from('interests').select('*').is('deleted_at', null).order('display_order')
 
   return (
     <div>
       <PageHeader title="Interests" />
-
       <Card>
         <h3 style={{ margin: '0 0 16px', fontSize: '16px', fontWeight: 600 }}>Add Interest</h3>
         <ActionForm action={createInterest} submitLabel="Create Interest">
@@ -21,18 +20,29 @@ export default async function InterestsPage() {
           </div>
         </ActionForm>
       </Card>
-
       <div style={{ marginTop: '24px' }}>
         <DataTable headers={['Icon', 'Name', 'Slug', 'Order', 'Active', 'Actions']}>
           {interests?.map(i => (
-            <tr key={i.id}>
-              <Td>{i.icon}</Td>
-              <Td>{i.name}</Td>
-              <Td>{i.slug}</Td>
-              <Td>{i.display_order}</Td>
-              <Td>{i.is_active ? 'Yes' : 'No'}</Td>
-              <Td><DeleteButton action={deleteInterest} id={i.id} /></Td>
-            </tr>
+            <EditableRow
+              key={i.id}
+              id={i.id}
+              editAction={updateInterest}
+              deleteAction={deleteInterest}
+              fields={[
+                { name: 'name', value: i.name },
+                { name: 'slug', value: i.slug },
+                { name: 'icon', value: i.icon ?? '' },
+                { name: 'display_order', value: i.display_order, type: 'number' },
+                { name: 'is_active', value: String(i.is_active), options: [{ value: 'true', label: 'Yes' }, { value: 'false', label: 'No' }] },
+              ]}
+              renderView={<>
+                <Td>{i.icon}</Td>
+                <Td>{i.name}</Td>
+                <Td>{i.slug}</Td>
+                <Td>{i.display_order}</Td>
+                <Td>{i.is_active ? 'Yes' : 'No'}</Td>
+              </>}
+            />
           ))}
         </DataTable>
       </div>

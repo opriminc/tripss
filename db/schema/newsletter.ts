@@ -9,6 +9,7 @@ export const newsletterSubscribers = pgTable('newsletter_subscribers', {
   isVerified: boolean('is_verified').notNull().default(false),
   subscribedAt: timestamp('subscribed_at').notNull().defaultNow(),
   unsubscribedAt: timestamp('unsubscribed_at'),
+  deletedAt: timestamp('deleted_at'),
 })
 
 export const newsletterSubscribersRelations = relations(newsletterSubscribers, ({ one }) => ({

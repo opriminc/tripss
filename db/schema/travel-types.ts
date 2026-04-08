@@ -8,6 +8,7 @@ export const travelTypes = pgTable('travel_types', {
   slug: varchar('slug', { length: 50 }).notNull().unique(),
   displayOrder: integer('display_order').notNull().default(0),
   createdAt: timestamp('created_at').notNull().defaultNow(),
+  deletedAt: timestamp('deleted_at'),
 })
 
 export const travelTypesRelations = relations(travelTypes, ({ many }) => ({

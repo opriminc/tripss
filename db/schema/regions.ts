@@ -17,6 +17,7 @@ export const regions = pgTable('regions', {
   displayOrder: integer('display_order').notNull().default(0),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
+  deletedAt: timestamp('deleted_at'),
 })
 
 export const regionsRelations = relations(regions, ({ many }) => ({

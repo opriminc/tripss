@@ -1,18 +1,18 @@
 import { createAdminClient } from '@/lib/supabase/server'
-import { createPlaceImage, deletePlaceImage } from '@/app/actions/admin'
-import { PageHeader, DataTable, Td, FormGroup, Input, Select, Card, ActionForm, DeleteButton } from '../_components/admin-ui'
+import { createPlaceImage, updatePlaceImage, deletePlaceImage } from '@/app/actions/admin'
+import { PageHeader, DataTable, Td, FormGroup, Input, Select, Card, ActionForm, EditableRow } from '../_components/admin-ui'
 
 export default async function PlaceImagesPage() {
   const supabase = createAdminClient()
   const [{ data: images }, { data: places }] = await Promise.all([
-    supabase.from('place_images').select('*, places(name)').order('created_at', { ascending: false }),
-    supabase.from('places').select('id, name').order('name'),
+    supabase.from('place_images').select('*, places(name)').is('deleted_at', null).order('created_at', { ascending: false }),
+    supabase.from('places').select('id, name').is('deleted_at', null).order('name'),
   ])
+  const placeOptions = places?.map(p => ({ value: p.id, label: p.name })) ?? []
 
   return (
     <div>
       <PageHeader title="Place Images" />
-
       <Card>
         <h3 style={{ margin: '0 0 16px', fontSize: '16px', fontWeight: 600 }}>Add Image</h3>
         <ActionForm action={createPlaceImage} submitLabel="Add Image">
@@ -32,20 +32,31 @@ export default async function PlaceImagesPage() {
           </div>
         </ActionForm>
       </Card>
-
       <div style={{ marginTop: '24px' }}>
         <DataTable headers={['Preview', 'Place', 'Primary', 'Order', 'Actions']}>
           {images?.map(img => (
-            <tr key={img.id}>
-              <Td>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={img.url} alt={img.alt_text ?? ''} style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '4px' }} />
-              </Td>
-              <Td>{(img.places as { name: string } | null)?.name}</Td>
-              <Td>{img.is_primary ? 'Yes' : 'No'}</Td>
-              <Td>{img.display_order}</Td>
-              <Td><DeleteButton action={deletePlaceImage} id={img.id} /></Td>
-            </tr>
+            <EditableRow
+              key={img.id}
+              id={img.id}
+              editAction={updatePlaceImage}
+              deleteAction={deletePlaceImage}
+              fields={[
+                { name: 'place_id', value: img.place_id, options: placeOptions },
+                { name: 'url', value: img.url },
+                { name: 'alt_text', value: img.alt_text ?? '' },
+                { name: 'display_order', value: img.display_order, type: 'number' },
+                { name: 'is_primary', value: String(img.is_primary), options: [{ value: 'true', label: 'Yes' }, { value: 'false', label: 'No' }] },
+              ]}
+              renderView={<>
+                <Td>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={img.url} alt={img.alt_text ?? ''} style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '4px' }} />
+                </Td>
+                <Td>{(img.places as { name: string } | null)?.name}</Td>
+                <Td>{img.is_primary ? 'Yes' : 'No'}</Td>
+                <Td>{img.display_order}</Td>
+              </>}
+            />
           ))}
         </DataTable>
       </div>

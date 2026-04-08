@@ -7,12 +7,12 @@ export default async function NewsletterPage() {
   const { data: subscribers } = await supabase
     .from('newsletter_subscribers')
     .select('*, regions(name)')
+    .is('deleted_at', null)
     .order('subscribed_at', { ascending: false })
 
   return (
     <div>
       <PageHeader title="Newsletter Subscribers" />
-
       <DataTable headers={['Email', 'Region', 'Verified', 'Subscribed', 'Actions']}>
         {subscribers?.map(s => (
           <tr key={s.id}>
@@ -20,7 +20,7 @@ export default async function NewsletterPage() {
             <Td>{(s.regions as { name: string } | null)?.name ?? '—'}</Td>
             <Td>{s.is_verified ? 'Yes' : 'No'}</Td>
             <Td>{new Date(s.subscribed_at).toLocaleDateString()}</Td>
-            <Td><DeleteButton action={deleteSubscriber} id={s.id} confirmMessage={`Remove subscriber ${s.email}?`} /></Td>
+            <Td><DeleteButton action={deleteSubscriber} id={s.id} confirmMessage={`Soft-delete subscriber ${s.email}?`} /></Td>
           </tr>
         ))}
         {(!subscribers || subscribers.length === 0) && (

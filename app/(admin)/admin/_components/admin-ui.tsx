@@ -133,6 +133,92 @@ export function ActionForm({
 // Delete button with confirmation
 // ============================================
 
+// ============================================
+// Inline editable row
+// ============================================
+
+export function EditableRow({
+  id,
+  fields,
+  editAction,
+  deleteAction,
+  deleteMessage,
+  renderView,
+}: {
+  id: string
+  fields: { name: string; value: string | number | boolean; type?: string; options?: { value: string; label: string }[] }[]
+  editAction: (prev: ActionResult, formData: FormData) => Promise<ActionResult>
+  deleteAction: (prev: ActionResult, formData: FormData) => Promise<ActionResult>
+  deleteMessage?: string
+  renderView: React.ReactNode
+}) {
+  const [editing, setEditing] = React.useState(false)
+  const [editState, editFormAction, editPending] = useActionState(async (prev: ActionResult, formData: FormData) => {
+    const result = await editAction(prev, formData)
+    if (result?.success) setEditing(false)
+    return result
+  }, null)
+
+  if (!editing) {
+    return (
+      <tr>
+        {renderView}
+        <td style={{ padding: '12px 16px', fontSize: '14px', borderBottom: '1px solid #f1f5f9', whiteSpace: 'nowrap' }}>
+          <Button variant="secondary" onClick={() => setEditing(true)} style={{ padding: '4px 10px', fontSize: '12px', marginRight: '6px' }}>
+            Edit
+          </Button>
+          <DeleteButton action={deleteAction} id={id} confirmMessage={deleteMessage} />
+        </td>
+      </tr>
+    )
+  }
+
+  return (
+    <tr>
+      <td colSpan={100} style={{ padding: '12px 16px', borderBottom: '1px solid #f1f5f9', background: '#f8fafc' }}>
+        <form action={editFormAction}>
+          <input type="hidden" name="id" value={id} />
+          {editState && !editState.success && (
+            <div style={{ background: '#fef2f2', color: '#dc2626', padding: '8px 10px', borderRadius: '6px', fontSize: '12px', marginBottom: '10px' }}>
+              {editState.error}
+            </div>
+          )}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '8px', marginBottom: '10px' }}>
+            {fields.map(f => (
+              <div key={f.name}>
+                <label style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: '#64748b', marginBottom: '2px', textTransform: 'uppercase' }}>
+                  {f.name.replace(/_/g, ' ')}
+                </label>
+                {f.options ? (
+                  <select name={f.name} defaultValue={String(f.value)} style={{ width: '100%', padding: '6px 8px', borderRadius: '4px', border: '1px solid #d1d5db', fontSize: '13px', background: 'white' }}>
+                    {f.options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                  </select>
+                ) : (
+                  <input
+                    name={f.name}
+                    type={f.type || 'text'}
+                    step={f.type === 'number' ? 'any' : undefined}
+                    defaultValue={typeof f.value === 'boolean' ? undefined : String(f.value ?? '')}
+                    style={{ width: '100%', padding: '6px 8px', borderRadius: '4px', border: '1px solid #d1d5db', fontSize: '13px', boxSizing: 'border-box' }}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+          <div style={{ display: 'flex', gap: '6px' }}>
+            <Button type="submit" disabled={editPending} style={{ padding: '5px 12px', fontSize: '12px', opacity: editPending ? 0.6 : 1 }}>
+              {editPending ? 'Saving...' : 'Save'}
+            </Button>
+            <Button type="button" variant="secondary" onClick={() => setEditing(false)} style={{ padding: '5px 12px', fontSize: '12px' }}>
+              Cancel
+            </Button>
+          </div>
+        </form>
+      </td>
+    </tr>
+  )
+}
+
 export function DeleteButton({
   action,
   id,

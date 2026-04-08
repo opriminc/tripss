@@ -10,6 +10,7 @@ export const ratings = pgTable('ratings', {
   reviewText: text('review_text'),
   ipHash: varchar('ip_hash', { length: 64 }),
   createdAt: timestamp('created_at').notNull().defaultNow(),
+  deletedAt: timestamp('deleted_at'),
 }, (table) => [
   index('ratings_place_idx').on(table.placeId),
   uniqueIndex('ratings_user_place_idx').on(table.userId, table.placeId),

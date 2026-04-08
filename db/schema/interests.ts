@@ -10,6 +10,7 @@ export const interests = pgTable('interests', {
   displayOrder: integer('display_order').notNull().default(0),
   isActive: boolean('is_active').notNull().default(true),
   createdAt: timestamp('created_at').notNull().defaultNow(),
+  deletedAt: timestamp('deleted_at'),
 })
 
 export const interestsRelations = relations(interests, ({ many }) => ({
