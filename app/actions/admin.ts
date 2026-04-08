@@ -9,6 +9,7 @@ import {
   travelTypeSchema,
   placeSchema,
   placeImageSchema,
+  newsletterSubscriberSchema,
   parseForm,
 } from '@/lib/validations/admin'
 import type { z } from 'zod'
@@ -187,8 +188,29 @@ export async function deleteRating(_prev: ActionResult, formData: FormData): Pro
 }
 
 // ============================================
-// NEWSLETTER (soft delete only)
+// NEWSLETTER
 // ============================================
+export async function createSubscriber(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
+  return adminAction({
+    formData, schema: newsletterSubscriberSchema, path: '/admin/newsletter',
+    operation: (db, data) => db.from('newsletter_subscribers').insert({
+      email: data.email,
+      region_id: data.region_id,
+      is_verified: data.is_verified,
+    }),
+  })
+}
+export async function updateSubscriber(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
+  const id = formData.get('id') as string
+  return adminAction({
+    formData, schema: newsletterSubscriberSchema, path: '/admin/newsletter',
+    operation: (db, data) => db.from('newsletter_subscribers').update({
+      email: data.email,
+      region_id: data.region_id,
+      is_verified: data.is_verified,
+    }).eq('id', id),
+  })
+}
 export async function deleteSubscriber(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
   return adminSoftDelete('newsletter_subscribers', formData, '/admin/newsletter')
 }

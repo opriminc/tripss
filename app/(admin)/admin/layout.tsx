@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { LogoutButton } from './_components/logout-button'
 
 const navItems = [
   { label: 'Dashboard', href: '/admin' },
@@ -21,13 +22,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         color: '#e2e8f0',
         padding: '20px 0',
         flexShrink: 0,
+        display: 'flex',
+        flexDirection: 'column',
       }}>
         <div style={{ padding: '0 20px 20px', borderBottom: '1px solid #1e293b' }}>
           <Link href="/admin" style={{ color: '#22c55e', textDecoration: 'none', fontSize: '20px', fontWeight: 800 }}>
             TripSS Admin
           </Link>
         </div>
-        <nav style={{ marginTop: '12px' }}>
+        <nav style={{ marginTop: '12px', flex: 1 }}>
           {navItems.map(item => (
             <Link
               key={item.href}
@@ -45,10 +48,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </Link>
           ))}
         </nav>
-        <div style={{ padding: '20px', borderTop: '1px solid #1e293b', marginTop: 'auto', position: 'absolute', bottom: 0, width: '220px' }}>
-          <Link href="/" style={{ color: '#64748b', textDecoration: 'none', fontSize: '13px' }}>
+        <div style={{ padding: '16px 20px', borderTop: '1px solid #1e293b' }}>
+          <Link href="/" style={{ display: 'block', color: '#64748b', textDecoration: 'none', fontSize: '13px', marginBottom: '12px' }}>
             ← Back to site
           </Link>
+          <LogoutButton />
         </div>
       </aside>
       <main style={{ flex: 1, background: '#f8fafc', padding: '32px', overflow: 'auto' }}>

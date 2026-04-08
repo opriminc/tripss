@@ -1,10 +1,24 @@
 /**
- * Database client re-exports.
- * Use lib/supabase/server.ts for server-side operations.
- * Use lib/supabase/client.ts for client-side operations.
+ * Database layer entry point.
  *
- * This file exists for backwards compatibility with the seed script
- * and Drizzle config. For app code, import from lib/supabase/ instead.
+ * For app code, import directly from:
+ *   - '@/lib/supabase/server' for server-side operations
+ *   - '@/lib/supabase/client' for client-side operations
+ *   - '@/db/schema' for Drizzle ORM table definitions and types
+ *   - '@/db/types' for Supabase client types (Database, views, functions)
+ *
+ * This file is intentionally minimal — it serves as documentation,
+ * not as a barrel export. Each module should import what it needs directly.
  */
-export { createAdminClient, createAuthClient, requireAdmin } from '@/lib/supabase/server'
-export { createBrowserClient } from '@/lib/supabase/client'
+
+export type { Database } from './types'
+export type {
+  Region, NewRegion,
+  Place, NewPlace,
+  Interest, NewInterest,
+  TravelType, NewTravelType,
+  OriginCity, NewOriginCity,
+  PlaceImage, NewPlaceImage,
+  Rating, NewRating,
+  NewsletterSubscriber, NewNewsletterSubscriber,
+} from './schema'

@@ -65,6 +65,20 @@ export const placeImageSchema = z.object({
   is_primary: boolField(false),
 })
 
+export const newsletterSubscriberSchema = z.object({
+  email: z.string().email().max(255),
+  region_id: z.string().uuid().or(z.literal('')).default('').transform(v => v || null),
+  is_verified: boolField(false),
+})
+
+/**
+ * Public-facing newsletter signup — minimal fields, no auth required.
+ */
+export const newsletterSignupSchema = z.object({
+  email: z.string().email('Please enter a valid email address').max(255),
+  region_id: z.string().uuid().or(z.literal('')).default('').transform(v => v || null),
+})
+
 /**
  * Parse FormData against a Zod schema.
  * Returns { data, error } — never throws.
