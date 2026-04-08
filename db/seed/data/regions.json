@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Greater Toronto Area",
+    "slug": "gta",
+    "province": "Ontario",
+    "provinceCode": "ON",
+    "centerLat": "43.6532000",
+    "centerLng": "-79.3832000"
+  }
+]

@@ -4,7 +4,9 @@
       "WebFetch(domain:tripss.ca)",
       "Bash(npm init:*)",
       "Bash(npm install:*)",
-      "Bash(wsl --status)"
+      "Bash(wsl --status)",
+      "WebFetch(domain:www.aroundpune.com)",
+      "Bash(node -e ':*)"
     ]
   }
 }

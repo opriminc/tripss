@@ -1,0 +1,6 @@
+[
+  { "name": "Day Trip", "slug": "day-trip", "displayOrder": 1 },
+  { "name": "Weekend Trip", "slug": "weekend-trip", "displayOrder": 2 },
+  { "name": "Long Weekend", "slug": "long-weekend", "displayOrder": 3 },
+  { "name": "Week-long Trip", "slug": "week-long-trip", "displayOrder": 4 }
+]

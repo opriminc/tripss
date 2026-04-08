@@ -1,0 +1,18 @@
+[
+  { "name": "Adventure Trips", "slug": "adventure-trips", "icon": "🏔️", "displayOrder": 1 },
+  { "name": "Amusement Parks", "slug": "amusement-parks", "icon": "🎢", "displayOrder": 2 },
+  { "name": "Backpacking Trips", "slug": "backpacking-trips", "icon": "🎒", "displayOrder": 3 },
+  { "name": "Beaches", "slug": "beaches", "icon": "🏖️", "displayOrder": 4 },
+  { "name": "Birding Places", "slug": "birding-places", "icon": "🦅", "displayOrder": 5 },
+  { "name": "Camping Places", "slug": "camping-places", "icon": "🏕️", "displayOrder": 6 },
+  { "name": "Family Trips", "slug": "family-trips", "icon": "👨‍👩‍👧", "displayOrder": 7 },
+  { "name": "Hill Stations", "slug": "hill-stations", "icon": "⛰️", "displayOrder": 8 },
+  { "name": "Holiday Resorts", "slug": "holiday-resorts", "icon": "🏨", "displayOrder": 9 },
+  { "name": "Lakes", "slug": "lakes", "icon": "🏞️", "displayOrder": 10 },
+  { "name": "Monuments", "slug": "monuments", "icon": "🏛️", "displayOrder": 11 },
+  { "name": "Night Trails", "slug": "night-trails", "icon": "🌙", "displayOrder": 12 },
+  { "name": "Offbeat Destinations", "slug": "offbeat-destinations", "icon": "🗺️", "displayOrder": 13 },
+  { "name": "Peaceful Places", "slug": "peaceful-places", "icon": "🧘", "displayOrder": 14 },
+  { "name": "Trekker's Favorite", "slug": "trekkers-favorite", "icon": "🥾", "displayOrder": 15 },
+  { "name": "Seniors' Favorite", "slug": "seniors-favorite", "icon": "🌿", "displayOrder": 16 }
+]

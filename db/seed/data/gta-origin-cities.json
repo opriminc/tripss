@@ -1,0 +1,12 @@
+[
+  { "name": "Toronto", "slug": "toronto", "lat": "43.6532000", "lng": "-79.3832000", "isDefault": true },
+  { "name": "Mississauga", "slug": "mississauga", "lat": "43.5890000", "lng": "-79.6441000" },
+  { "name": "Brampton", "slug": "brampton", "lat": "43.7315000", "lng": "-79.7624000" },
+  { "name": "Markham", "slug": "markham", "lat": "43.8561000", "lng": "-79.3370000" },
+  { "name": "Vaughan", "slug": "vaughan", "lat": "43.8563000", "lng": "-79.5085000" },
+  { "name": "Oakville", "slug": "oakville", "lat": "43.4675000", "lng": "-79.6877000" },
+  { "name": "Hamilton", "slug": "hamilton", "lat": "43.2557000", "lng": "-79.8711000" },
+  { "name": "Oshawa", "slug": "oshawa", "lat": "43.8971000", "lng": "-78.8658000" },
+  { "name": "Richmond Hill", "slug": "richmond-hill", "lat": "43.8828000", "lng": "-79.4403000" },
+  { "name": "Burlington", "slug": "burlington", "lat": "43.3255000", "lng": "-79.7990000" }
+]
