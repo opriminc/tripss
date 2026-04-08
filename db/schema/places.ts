@@ -1,4 +1,4 @@
-import { pgTable, uuid, varchar, text, decimal, boolean, integer, timestamp, index, uniqueIndex } from 'drizzle-orm/pg-core'
+import { pgTable, uuid, varchar, text, decimal, boolean, integer, timestamp, index, uniqueIndex, customType } from 'drizzle-orm/pg-core'
 import { relations, type InferSelectModel, type InferInsertModel } from 'drizzle-orm'
 import { regions } from './regions'
 import { travelTypes } from './travel-types'
@@ -6,6 +6,13 @@ import { placeImages } from './place-images'
 import { placeInterests } from './place-interests'
 import { placeBestMonths } from './place-best-months'
 import { ratings } from './ratings'
+
+// PostGIS geography type — read-only, populated by database trigger
+const geography = customType<{ data: string; driverParam: string }>({
+  dataType() {
+    return 'geography(Point, 4326)'
+  },
+})
 
 export const places = pgTable('places', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -15,14 +22,15 @@ export const places = pgTable('places', {
   description: text('description'),
   shortDescription: varchar('short_description', { length: 500 }),
   nearbyText: varchar('nearby_text', { length: 255 }),
-  lat: decimal('lat', { precision: 10, scale: 7 }).notNull(),
-  lng: decimal('lng', { precision: 10, scale: 7 }).notNull(),
+  lat: decimal('lat', { precision: 10, scale: 7 }).$type<number>().notNull(),
+  lng: decimal('lng', { precision: 10, scale: 7 }).$type<number>().notNull(),
+  location: geography('location'),
   address: text('address'),
   city: varchar('city', { length: 100 }),
   province: varchar('province', { length: 50 }),
   postalCode: varchar('postal_code', { length: 10 }),
   travelTypeId: uuid('travel_type_id').references(() => travelTypes.id, { onDelete: 'set null', onUpdate: 'cascade' }),
-  avgRating: decimal('avg_rating', { precision: 2, scale: 1 }).notNull().default('0.0'),
+  avgRating: decimal('avg_rating', { precision: 2, scale: 1 }).notNull().default('0.0').$type<number>(),
   ratingCount: integer('rating_count').notNull().default(0),
   isFeatured: boolean('is_featured').notNull().default(false),
   isActive: boolean('is_active').notNull().default(true),

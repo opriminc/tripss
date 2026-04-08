@@ -7,8 +7,8 @@ export const originCities = pgTable('origin_cities', {
   regionId: uuid('region_id').notNull().references(() => regions.id, { onDelete: 'restrict', onUpdate: 'cascade' }),
   name: varchar('name', { length: 100 }).notNull(),
   slug: varchar('slug', { length: 100 }).notNull(),
-  lat: decimal('lat', { precision: 10, scale: 7 }).notNull(),
-  lng: decimal('lng', { precision: 10, scale: 7 }).notNull(),
+  lat: decimal('lat', { precision: 10, scale: 7 }).$type<number>().notNull(),
+  lng: decimal('lng', { precision: 10, scale: 7 }).$type<number>().notNull(),
   isDefault: boolean('is_default').notNull().default(false),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 }, (table) => [
