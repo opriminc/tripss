@@ -1,13 +1,17 @@
-import { query } from '@/lib/supabase/query'
+import { queryPaginated } from '@/lib/supabase/query'
 import { createInterest, updateInterest, deleteInterest } from '@/app/actions/admin'
 import { PageHeader, DataTable, Td, FormGroup, Input, Card, ActionForm, EditableRow } from '../_components/admin-ui'
+import { SearchBar, PaginationBar } from '../_components/search-wrapper'
 
-export default async function InterestsPage() {
-  const interests = await query(db => db.from('interests').select('*').is('deleted_at', null).order('display_order'))
+export default async function InterestsPage({ searchParams }: { searchParams: Promise<{ q?: string; page?: string }> }) {
+  const { q, page } = await searchParams
+  const { data: interests, totalCount } = await queryPaginated({
+    table: 'interests', select: '*', page: parseInt(page ?? '1'), search: q, searchColumns: ['name', 'slug'], orderBy: 'display_order',
+  })
 
   return (
     <div>
-      <PageHeader title="Interests" />
+      <PageHeader title="Interests"><SearchBar placeholder="Search interests..." /></PageHeader>
       <Card>
         <h3 style={{ margin: '0 0 16px', fontSize: '16px', fontWeight: 600 }}>Add Interest</h3>
         <ActionForm action={createInterest} submitLabel="Create Interest">
@@ -21,29 +25,18 @@ export default async function InterestsPage() {
       </Card>
       <div style={{ marginTop: '24px' }}>
         <DataTable headers={['Icon', 'Name', 'Slug', 'Order', 'Active', 'Actions']}>
-          {(interests as any[]).map((i: any) => (
-            <EditableRow
-              key={i.id}
-              id={i.id}
-              editAction={updateInterest}
-              deleteAction={deleteInterest}
+          {interests.map((i: any) => (
+            <EditableRow key={i.id} id={i.id} editAction={updateInterest} deleteAction={deleteInterest}
               fields={[
-                { name: 'name', value: i.name },
-                { name: 'slug', value: i.slug },
-                { name: 'icon', value: i.icon ?? '' },
+                { name: 'name', value: i.name }, { name: 'slug', value: i.slug }, { name: 'icon', value: i.icon ?? '' },
                 { name: 'display_order', value: i.display_order, type: 'number' },
                 { name: 'is_active', value: String(i.is_active), options: [{ value: 'true', label: 'Yes' }, { value: 'false', label: 'No' }] },
               ]}
-              renderView={<>
-                <Td>{i.icon}</Td>
-                <Td>{i.name}</Td>
-                <Td>{i.slug}</Td>
-                <Td>{i.display_order}</Td>
-                <Td>{i.is_active ? 'Yes' : 'No'}</Td>
-              </>}
+              renderView={<><Td>{i.icon}</Td><Td>{i.name}</Td><Td>{i.slug}</Td><Td>{i.display_order}</Td><Td>{i.is_active ? 'Yes' : 'No'}</Td></>}
             />
           ))}
         </DataTable>
+        <PaginationBar totalCount={totalCount} />
       </div>
     </div>
   )
