@@ -9,6 +9,7 @@ const navItems = [
   { label: 'Travel Types', href: '/admin/travel-types' },
   { label: 'Places', href: '/admin/places' },
   { label: 'Place Images', href: '/admin/place-images' },
+  { label: 'Place Contacts', href: '/admin/place-contacts' },
   { label: 'Ratings', href: '/admin/ratings' },
   { label: 'Newsletter', href: '/admin/newsletter' },
 ]

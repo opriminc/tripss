@@ -6,6 +6,14 @@ export type InterestRef = {
   icon: string | null
 }
 
+export type PlaceContactRef = {
+  id: string
+  type: string
+  value: string
+  label: string | null
+  is_primary: boolean
+}
+
 export type PlaceImageRef = {
   id: string
   url: string
@@ -81,6 +89,7 @@ export type PlaceDetailResult = {
   travel_type_name: string | null
   travel_type_slug: string | null
   images: PlaceImageRef[]
+  contacts: PlaceContactRef[]
   interests: InterestRef[]
   best_months: number[]
   recent_ratings: RatingRef[]
@@ -340,6 +349,39 @@ export type Database = {
           created_at?: string
         }
       }
+      place_contacts: {
+        Row: {
+          id: string
+          place_id: string
+          type: string
+          value: string
+          label: string | null
+          is_primary: boolean
+          is_active: boolean
+          created_at: string
+          deleted_at: string | null
+        }
+        Insert: {
+          id?: string
+          place_id: string
+          type: string
+          value: string
+          label?: string | null
+          is_primary?: boolean
+          is_active?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          place_id?: string
+          type?: string
+          value?: string
+          label?: string | null
+          is_primary?: boolean
+          is_active?: boolean
+          created_at?: string
+        }
+      }
       place_interests: {
         Row: {
           place_id: string
@@ -477,6 +519,7 @@ export type Database = {
           travel_type_name: string | null
           travel_type_slug: string | null
           images: PlaceImageRef[]
+          contacts: PlaceContactRef[]
           interests: InterestRef[]
           best_months: number[]
           recent_ratings: RatingRef[]

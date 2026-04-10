@@ -66,6 +66,15 @@ export const placeImageSchema = z.object({
   is_active: boolField(true),
 })
 
+export const placeContactSchema = z.object({
+  place_id: z.string().uuid(),
+  type: z.enum(['website', 'phone', 'email', 'facebook', 'instagram', 'twitter', 'booking', 'other']),
+  value: z.string().min(1).max(2000),
+  label: z.string().max(100).default(''),
+  is_primary: boolField(false),
+  is_active: boolField(true),
+})
+
 export const newsletterSubscriberSchema = z.object({
   email: z.string().email().max(255),
   region_id: z.string().uuid().or(z.literal('')).default('').transform(v => v || null),

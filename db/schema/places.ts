@@ -3,6 +3,7 @@ import { relations, type InferSelectModel, type InferInsertModel } from 'drizzle
 import { regions } from './regions'
 import { travelTypes } from './travel-types'
 import { placeImages } from './place-images'
+import { placeContacts } from './place-contacts'
 import { placeInterests } from './place-interests'
 import { placeBestMonths } from './place-best-months'
 import { ratings } from './ratings'
@@ -56,6 +57,7 @@ export const placesRelations = relations(places, ({ one, many }) => ({
     references: [travelTypes.id],
   }),
   images: many(placeImages),
+  contacts: many(placeContacts),
   placeInterests: many(placeInterests),
   bestMonths: many(placeBestMonths),
   ratings: many(ratings),

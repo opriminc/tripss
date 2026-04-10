@@ -20,6 +20,7 @@ export type {
   TravelType, NewTravelType,
   OriginCity, NewOriginCity,
   PlaceImage, NewPlaceImage,
+  PlaceContact, NewPlaceContact,
   Rating, NewRating,
   NewsletterSubscriber, NewNewsletterSubscriber,
 } from './schema'

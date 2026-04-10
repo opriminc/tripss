@@ -9,6 +9,7 @@ import {
   travelTypeSchema,
   placeSchema,
   placeImageSchema,
+  placeContactSchema,
   newsletterSubscriberSchema,
   parseForm,
 } from '@/lib/validations/admin'
@@ -197,6 +198,26 @@ export async function updatePlaceImage(_prev: ActionResult, formData: FormData):
 }
 export async function deletePlaceImage(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
   return adminSoftDelete('place_images', formData, '/admin/place-images')
+}
+
+// ============================================
+// PLACE CONTACTS
+// ============================================
+export async function createPlaceContact(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
+  return adminAction({
+    formData, schema: placeContactSchema, path: '/admin/place-contacts',
+    operation: (db, data) => db.from('place_contacts').insert({ ...data, label: data.label || null }),
+  })
+}
+export async function updatePlaceContact(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
+  const id = formData.get('id') as string
+  return adminAction({
+    formData, schema: placeContactSchema, path: '/admin/place-contacts',
+    operation: (db, data) => db.from('place_contacts').update({ ...data, label: data.label || null }).eq('id', id),
+  })
+}
+export async function deletePlaceContact(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
+  return adminSoftDelete('place_contacts', formData, '/admin/place-contacts')
 }
 
 // ============================================
