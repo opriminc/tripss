@@ -10,6 +10,7 @@ export const originCities = pgTable('origin_cities', {
   lat: decimal('lat', { precision: 10, scale: 7 }).$type<number>().notNull(),
   lng: decimal('lng', { precision: 10, scale: 7 }).$type<number>().notNull(),
   isDefault: boolean('is_default').notNull().default(false),
+  isActive: boolean('is_active').notNull().default(true),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   deletedAt: timestamp('deleted_at'),
 }, (table) => [

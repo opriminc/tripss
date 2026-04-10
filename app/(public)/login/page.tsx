@@ -18,17 +18,22 @@ function LoginForm() {
     setError('')
     setLoading(true)
 
-    const supabase = createBrowserClient()
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    try {
+      const supabase = createBrowserClient()
+      const { error } = await supabase.auth.signInWithPassword({ email, password })
 
-    if (error) {
-      setError(error.message)
+      if (error) {
+        setError(error.message)
+        setLoading(false)
+        return
+      }
+
+      router.push(redirect)
+      router.refresh()
+    } catch {
+      setError('An unexpected error occurred. Please try again.')
       setLoading(false)
-      return
     }
-
-    router.push(redirect)
-    router.refresh()
   }
 
   return (

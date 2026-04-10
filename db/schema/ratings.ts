@@ -1,4 +1,4 @@
-import { pgTable, uuid, smallint, text, varchar, timestamp, index, uniqueIndex, check } from 'drizzle-orm/pg-core'
+import { pgTable, uuid, smallint, text, varchar, boolean, timestamp, index, uniqueIndex, check } from 'drizzle-orm/pg-core'
 import { relations, sql, type InferSelectModel, type InferInsertModel } from 'drizzle-orm'
 import { places } from './places'
 
@@ -9,6 +9,7 @@ export const ratings = pgTable('ratings', {
   score: smallint('score').notNull(),
   reviewText: text('review_text'),
   ipHash: varchar('ip_hash', { length: 64 }),
+  isActive: boolean('is_active').notNull().default(true),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   deletedAt: timestamp('deleted_at'),
 }, (table) => [

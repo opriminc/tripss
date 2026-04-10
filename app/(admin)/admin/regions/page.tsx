@@ -1,14 +1,13 @@
-import { createAdminClient } from '@/lib/supabase/server'
+import { query } from '@/lib/supabase/query'
 import { createRegion, updateRegion, deleteRegion } from '@/app/actions/admin'
 import { PageHeader, DataTable, Td, FormGroup, Input, Select, Card, ActionForm, EditableRow } from '../_components/admin-ui'
 
 export default async function RegionsPage() {
-  const supabase = createAdminClient()
-  const [{ data: regions }, { data: provinces }] = await Promise.all([
-    supabase.from('regions').select('*, provinces(name)').is('deleted_at', null).order('display_order'),
-    supabase.from('provinces').select('code, name').order('name'),
+  const [regions, provinces] = await Promise.all([
+    query(db => db.from('regions').select('*, provinces(name)').is('deleted_at', null).order('display_order')),
+    query(db => db.from('provinces').select('code, name').order('name')),
   ])
-  const provinceOptions = provinces?.map(p => ({ value: p.code, label: `${p.name} (${p.code})` })) ?? []
+  const provinceOptions = (provinces as { code: string; name: string }[]).map(p => ({ value: p.code, label: `${p.name} (${p.code})` }))
 
   return (
     <div>
@@ -22,7 +21,7 @@ export default async function RegionsPage() {
             <FormGroup label="Province">
               <Select name="province_code" required>
                 <option value="">Select province</option>
-                {provinces?.map(p => <option key={p.code} value={p.code}>{p.name} ({p.code})</option>)}
+                {(provinces as { code: string; name: string }[]).map(p => <option key={p.code} value={p.code}>{p.name} ({p.code})</option>)}
               </Select>
             </FormGroup>
             <FormGroup label="Center Lat"><Input name="center_lat" type="number" step="any" required /></FormGroup>
@@ -32,7 +31,7 @@ export default async function RegionsPage() {
       </Card>
       <div style={{ marginTop: '24px' }}>
         <DataTable headers={['Name', 'Slug', 'Province', 'Active', 'Coordinates', 'Actions']}>
-          {regions?.map(r => (
+          {(regions as any[]).map((r: any) => (
             <EditableRow
               key={r.id}
               id={r.id}
@@ -51,7 +50,7 @@ export default async function RegionsPage() {
               renderView={<>
                 <Td>{r.name}</Td>
                 <Td>{r.slug}</Td>
-                <Td>{(r.provinces as { name: string } | null)?.name} ({r.province_code})</Td>
+                <Td>{r.provinces?.name} ({r.province_code})</Td>
                 <Td>{r.is_active ? 'Yes' : 'No'}</Td>
                 <Td>{r.center_lat}, {r.center_lng}</Td>
               </>}

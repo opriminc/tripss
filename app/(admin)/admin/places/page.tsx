@@ -1,16 +1,15 @@
-import { createAdminClient } from '@/lib/supabase/server'
+import { query } from '@/lib/supabase/query'
 import { createPlace, updatePlace, deletePlace } from '@/app/actions/admin'
 import { PageHeader, DataTable, Td, FormGroup, Input, Select, TextArea, Card, ActionForm, EditableRow } from '../_components/admin-ui'
 
 export default async function PlacesPage() {
-  const supabase = createAdminClient()
-  const [{ data: places }, { data: regions }, { data: travelTypes }] = await Promise.all([
-    supabase.from('places').select('*, regions(name), travel_types(name)').is('deleted_at', null).order('name'),
-    supabase.from('regions').select('id, name').is('deleted_at', null).order('name'),
-    supabase.from('travel_types').select('id, name').is('deleted_at', null).order('display_order'),
+  const [places, regions, travelTypes] = await Promise.all([
+    query(db => db.from('places').select('*, regions(name), travel_types(name)').is('deleted_at', null).order('name')),
+    query(db => db.from('regions').select('id, name').is('deleted_at', null).order('name')),
+    query(db => db.from('travel_types').select('id, name').is('deleted_at', null).order('display_order')),
   ])
-  const regionOptions = regions?.map(r => ({ value: r.id, label: r.name })) ?? []
-  const ttOptions = [{ value: '', label: 'None' }, ...(travelTypes?.map(t => ({ value: t.id, label: t.name })) ?? [])]
+  const regionOptions = (regions as any[]).map((r: any) => ({ value: r.id, label: r.name }))
+  const ttOptions = [{ value: '', label: 'None' }, ...(travelTypes as any[]).map((t: any) => ({ value: t.id, label: t.name }))]
 
   return (
     <div>
@@ -22,7 +21,7 @@ export default async function PlacesPage() {
             <FormGroup label="Region">
               <Select name="region_id" required>
                 <option value="">Select region</option>
-                {regions?.map(r => <option key={r.id} value={r.id}>{r.name}</option>)}
+                {(regions as any[]).map((r: any) => <option key={r.id} value={r.id}>{r.name}</option>)}
               </Select>
             </FormGroup>
             <FormGroup label="Name"><Input name="name" required placeholder="Niagara Falls" /></FormGroup>
@@ -32,7 +31,7 @@ export default async function PlacesPage() {
             <FormGroup label="Travel Type">
               <Select name="travel_type_id">
                 <option value="">None</option>
-                {travelTypes?.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
+                {(travelTypes as any[]).map((t: any) => <option key={t.id} value={t.id}>{t.name}</option>)}
               </Select>
             </FormGroup>
             <FormGroup label="Latitude"><Input name="lat" type="number" step="any" required /></FormGroup>
@@ -50,7 +49,7 @@ export default async function PlacesPage() {
       </Card>
       <div style={{ marginTop: '24px' }}>
         <DataTable headers={['Name', 'Region', 'Type', 'Rating', 'Active', 'Featured', 'Actions']}>
-          {places?.map(p => (
+          {(places as any[]).map((p: any) => (
             <EditableRow
               key={p.id}
               id={p.id}
@@ -73,8 +72,8 @@ export default async function PlacesPage() {
               ]}
               renderView={<>
                 <Td>{p.name}</Td>
-                <Td>{(p.regions as { name: string } | null)?.name}</Td>
-                <Td>{(p.travel_types as { name: string } | null)?.name ?? '—'}</Td>
+                <Td>{p.regions?.name}</Td>
+                <Td>{p.travel_types?.name ?? '—'}</Td>
                 <Td>{p.avg_rating} ({p.rating_count})</Td>
                 <Td>{p.is_active ? 'Yes' : 'No'}</Td>
                 <Td>{p.is_featured ? 'Yes' : 'No'}</Td>

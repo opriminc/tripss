@@ -23,6 +23,7 @@ export const originCitySchema = z.object({
   lat,
   lng,
   is_default: boolField(false),
+  is_active: boolField(true),
 })
 
 export const interestSchema = z.object({
@@ -37,6 +38,7 @@ export const travelTypeSchema = z.object({
   name: z.string().min(1).max(50),
   slug,
   display_order: z.coerce.number().int().min(0).default(0),
+  is_active: boolField(true),
 })
 
 export const placeSchema = z.object({
@@ -61,12 +63,14 @@ export const placeImageSchema = z.object({
   alt_text: z.string().max(255).default(''),
   display_order: z.coerce.number().int().min(0).default(0),
   is_primary: boolField(false),
+  is_active: boolField(true),
 })
 
 export const newsletterSubscriberSchema = z.object({
   email: z.string().email().max(255),
   region_id: z.string().uuid().or(z.literal('')).default('').transform(v => v || null),
   is_verified: boolField(false),
+  is_active: boolField(true),
 })
 
 /**

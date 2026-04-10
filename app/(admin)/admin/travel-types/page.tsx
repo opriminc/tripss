@@ -1,10 +1,9 @@
-import { createAdminClient } from '@/lib/supabase/server'
+import { query } from '@/lib/supabase/query'
 import { createTravelType, updateTravelType, deleteTravelType } from '@/app/actions/admin'
 import { PageHeader, DataTable, Td, FormGroup, Input, Card, ActionForm, EditableRow } from '../_components/admin-ui'
 
 export default async function TravelTypesPage() {
-  const supabase = createAdminClient()
-  const { data: types } = await supabase.from('travel_types').select('*').is('deleted_at', null).order('display_order')
+  const types = await query(db => db.from('travel_types').select('*').is('deleted_at', null).order('display_order'))
 
   return (
     <div>
@@ -20,8 +19,8 @@ export default async function TravelTypesPage() {
         </ActionForm>
       </Card>
       <div style={{ marginTop: '24px' }}>
-        <DataTable headers={['Name', 'Slug', 'Order', 'Actions']}>
-          {types?.map(t => (
+        <DataTable headers={['Name', 'Slug', 'Order', 'Active', 'Actions']}>
+          {(types as any[]).map((t: any) => (
             <EditableRow
               key={t.id}
               id={t.id}
@@ -31,11 +30,13 @@ export default async function TravelTypesPage() {
                 { name: 'name', value: t.name },
                 { name: 'slug', value: t.slug },
                 { name: 'display_order', value: t.display_order, type: 'number' },
+                { name: 'is_active', value: String(t.is_active), options: [{ value: 'true', label: 'Yes' }, { value: 'false', label: 'No' }] },
               ]}
               renderView={<>
                 <Td>{t.name}</Td>
                 <Td>{t.slug}</Td>
                 <Td>{t.display_order}</Td>
+                <Td>{t.is_active ? 'Yes' : 'No'}</Td>
               </>}
             />
           ))}

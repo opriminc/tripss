@@ -22,28 +22,48 @@ async function adminAction<T extends z.ZodType>(options: {
   path: string
   operation: (supabase: ReturnType<typeof createAdminClient>, data: z.infer<T>) => PromiseLike<{ error: { message: string } | null }>
 }): Promise<ActionResult> {
-  try { await requireAdmin() } catch { return { success: false, error: 'Unauthorized' } }
+  try {
+    await requireAdmin()
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'Unauthorized'
+    return { success: false, error: msg }
+  }
 
   const parsed = parseForm(options.schema, options.formData)
   if (parsed.error) return { success: false, error: parsed.error }
 
-  const supabase = createAdminClient()
-  const { error } = await options.operation(supabase, parsed.data!)
-  if (error) return { success: false, error: error.message }
+  try {
+    const supabase = createAdminClient()
+    const { error } = await options.operation(supabase, parsed.data!)
+    if (error) return { success: false, error: error.message }
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'An unexpected error occurred'
+    return { success: false, error: msg }
+  }
 
   revalidatePath(options.path)
   return { success: true }
 }
 
 async function adminSoftDelete(table: string, formData: FormData, path: string): Promise<ActionResult> {
-  try { await requireAdmin() } catch { return { success: false, error: 'Unauthorized' } }
+  try {
+    await requireAdmin()
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'Unauthorized'
+    return { success: false, error: msg }
+  }
 
   const id = formData.get('id') as string
   if (!id) return { success: false, error: 'Missing ID' }
 
-  const supabase = createAdminClient()
-  const { error } = await supabase.from(table).update({ deleted_at: new Date().toISOString() }).eq('id', id)
-  if (error) return { success: false, error: error.message }
+  try {
+    const supabase = createAdminClient()
+    const { error } = await supabase.from(table).update({ deleted_at: new Date().toISOString() }).eq('id', id)
+    if (error) return { success: false, error: error.message }
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'Failed to delete'
+    return { success: false, error: msg }
+  }
 
   revalidatePath(path)
   return { success: true }

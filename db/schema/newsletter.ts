@@ -7,6 +7,7 @@ export const newsletterSubscribers = pgTable('newsletter_subscribers', {
   email: varchar('email', { length: 255 }).notNull().unique(),
   regionId: uuid('region_id').references(() => regions.id, { onDelete: 'set null', onUpdate: 'cascade' }),
   isVerified: boolean('is_verified').notNull().default(false),
+  isActive: boolean('is_active').notNull().default(true),
   subscribedAt: timestamp('subscribed_at').notNull().defaultNow(),
   unsubscribedAt: timestamp('unsubscribed_at'),
   deletedAt: timestamp('deleted_at'),

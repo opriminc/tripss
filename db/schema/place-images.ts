@@ -9,6 +9,7 @@ export const placeImages = pgTable('place_images', {
   altText: varchar('alt_text', { length: 255 }),
   displayOrder: integer('display_order').notNull().default(0),
   isPrimary: boolean('is_primary').notNull().default(false),
+  isActive: boolean('is_active').notNull().default(true),
   width: integer('width'),
   height: integer('height'),
   createdAt: timestamp('created_at').notNull().defaultNow(),

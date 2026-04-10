@@ -1,14 +1,13 @@
-import { createAdminClient } from '@/lib/supabase/server'
+import { query } from '@/lib/supabase/query'
 import { createPlaceImage, updatePlaceImage, deletePlaceImage } from '@/app/actions/admin'
 import { PageHeader, DataTable, Td, FormGroup, Input, Select, Card, ActionForm, EditableRow } from '../_components/admin-ui'
 
 export default async function PlaceImagesPage() {
-  const supabase = createAdminClient()
-  const [{ data: images }, { data: places }] = await Promise.all([
-    supabase.from('place_images').select('*, places(name)').is('deleted_at', null).order('created_at', { ascending: false }),
-    supabase.from('places').select('id, name').is('deleted_at', null).order('name'),
+  const [images, places] = await Promise.all([
+    query(db => db.from('place_images').select('*, places(name)').is('deleted_at', null).order('created_at', { ascending: false })),
+    query(db => db.from('places').select('id, name').is('deleted_at', null).order('name')),
   ])
-  const placeOptions = places?.map(p => ({ value: p.id, label: p.name })) ?? []
+  const placeOptions = (places as any[]).map((p: any) => ({ value: p.id, label: p.name }))
 
   return (
     <div>
@@ -20,7 +19,7 @@ export default async function PlaceImagesPage() {
             <FormGroup label="Place">
               <Select name="place_id" required>
                 <option value="">Select place</option>
-                {places?.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+                {(places as any[]).map((p: any) => <option key={p.id} value={p.id}>{p.name}</option>)}
               </Select>
             </FormGroup>
             <FormGroup label="Image URL"><Input name="url" required placeholder="https://..." /></FormGroup>
@@ -33,8 +32,8 @@ export default async function PlaceImagesPage() {
         </ActionForm>
       </Card>
       <div style={{ marginTop: '24px' }}>
-        <DataTable headers={['Preview', 'Place', 'Primary', 'Order', 'Actions']}>
-          {images?.map(img => (
+        <DataTable headers={['Preview', 'Place', 'Primary', 'Order', 'Active', 'Actions']}>
+          {(images as any[]).map((img: any) => (
             <EditableRow
               key={img.id}
               id={img.id}
@@ -46,15 +45,17 @@ export default async function PlaceImagesPage() {
                 { name: 'alt_text', value: img.alt_text ?? '' },
                 { name: 'display_order', value: img.display_order, type: 'number' },
                 { name: 'is_primary', value: String(img.is_primary), options: [{ value: 'true', label: 'Yes' }, { value: 'false', label: 'No' }] },
+                { name: 'is_active', value: String(img.is_active), options: [{ value: 'true', label: 'Yes' }, { value: 'false', label: 'No' }] },
               ]}
               renderView={<>
                 <Td>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={img.url} alt={img.alt_text ?? ''} style={{ width: '60px', height: '40px', objectFit: 'cover', borderRadius: '4px' }} />
                 </Td>
-                <Td>{(img.places as { name: string } | null)?.name}</Td>
+                <Td>{img.places?.name}</Td>
                 <Td>{img.is_primary ? 'Yes' : 'No'}</Td>
                 <Td>{img.display_order}</Td>
+                <Td>{img.is_active ? 'Yes' : 'No'}</Td>
               </>}
             />
           ))}

@@ -1,10 +1,9 @@
-import { createAdminClient } from '@/lib/supabase/server'
+import { query } from '@/lib/supabase/query'
 import { createInterest, updateInterest, deleteInterest } from '@/app/actions/admin'
 import { PageHeader, DataTable, Td, FormGroup, Input, Card, ActionForm, EditableRow } from '../_components/admin-ui'
 
 export default async function InterestsPage() {
-  const supabase = createAdminClient()
-  const { data: interests } = await supabase.from('interests').select('*').is('deleted_at', null).order('display_order')
+  const interests = await query(db => db.from('interests').select('*').is('deleted_at', null).order('display_order'))
 
   return (
     <div>
@@ -22,7 +21,7 @@ export default async function InterestsPage() {
       </Card>
       <div style={{ marginTop: '24px' }}>
         <DataTable headers={['Icon', 'Name', 'Slug', 'Order', 'Active', 'Actions']}>
-          {interests?.map(i => (
+          {(interests as any[]).map((i: any) => (
             <EditableRow
               key={i.id}
               id={i.id}
