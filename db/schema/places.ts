@@ -27,7 +27,6 @@ export const places = pgTable('places', {
   location: geography('location'),
   address: text('address'),
   city: varchar('city', { length: 100 }),
-  province: varchar('province', { length: 50 }),
   postalCode: varchar('postal_code', { length: 10 }),
   travelTypeId: uuid('travel_type_id').references(() => travelTypes.id, { onDelete: 'set null', onUpdate: 'cascade' }),
   avgRating: decimal('avg_rating', { precision: 2, scale: 1 }).notNull().default('0.0').$type<number>(),

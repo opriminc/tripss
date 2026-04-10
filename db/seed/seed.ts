@@ -23,7 +23,6 @@ async function seed() {
     .insert(regionsData.map(r => ({
       name: r.name,
       slug: r.slug,
-      province: r.province,
       province_code: r.provinceCode,
       center_lat: r.centerLat,
       center_lng: r.centerLng,
@@ -98,7 +97,6 @@ async function seed() {
         lat: place.lat,
         lng: place.lng,
         city: place.city,
-        province: place.province,
         travel_type_id: typeMap[place.travelType] ?? null,
       })
       .select()

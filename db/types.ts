@@ -67,7 +67,8 @@ export type PlaceDetailResult = {
   lng: number
   address: string | null
   city: string | null
-  province: string | null
+  province_name: string
+  province_code: string
   postal_code: string | null
   avg_rating: number
   rating_count: number
@@ -88,28 +89,45 @@ export type PlaceDetailResult = {
 export type Database = {
   public: {
     Tables: {
+      provinces: {
+        Row: {
+          code: string
+          name: string
+          country: string
+          created_at: string
+        }
+        Insert: {
+          code: string
+          name: string
+          country?: string
+          created_at?: string
+        }
+        Update: {
+          code?: string
+          name?: string
+          country?: string
+          created_at?: string
+        }
+      }
       regions: {
         Row: {
           id: string
           name: string
           slug: string
-          province: string
           province_code: string
-          country: string
           center_lat: number
           center_lng: number
           is_active: boolean
           display_order: number
           created_at: string
           updated_at: string
+          deleted_at: string | null
         }
         Insert: {
           id?: string
           name: string
           slug: string
-          province: string
           province_code: string
-          country?: string
           center_lat: number
           center_lng: number
           is_active?: boolean
@@ -121,9 +139,7 @@ export type Database = {
           id?: string
           name?: string
           slug?: string
-          province?: string
           province_code?: string
-          country?: string
           center_lat?: number
           center_lng?: number
           is_active?: boolean
@@ -230,7 +246,6 @@ export type Database = {
           location: unknown | null
           address: string | null
           city: string | null
-          province: string | null
           postal_code: string | null
           travel_type_id: string | null
           avg_rating: number
@@ -241,6 +256,7 @@ export type Database = {
           meta_description: string | null
           created_at: string
           updated_at: string
+          deleted_at: string | null
         }
         Insert: {
           id?: string
@@ -254,7 +270,6 @@ export type Database = {
           lng: number
           address?: string | null
           city?: string | null
-          province?: string | null
           postal_code?: string | null
           travel_type_id?: string | null
           avg_rating?: number
@@ -278,7 +293,6 @@ export type Database = {
           lng?: number
           address?: string | null
           city?: string | null
-          province?: string | null
           postal_code?: string | null
           travel_type_id?: string | null
           avg_rating?: number
@@ -449,7 +463,6 @@ export type Database = {
           lng: number
           address: string | null
           city: string | null
-          province: string | null
           postal_code: string | null
           avg_rating: number
           rating_count: number
@@ -460,6 +473,7 @@ export type Database = {
           region_name: string
           region_slug: string
           region_province: string
+          province_code: string
           travel_type_name: string | null
           travel_type_slug: string | null
           images: PlaceImageRef[]

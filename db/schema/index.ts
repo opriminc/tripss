@@ -1,4 +1,5 @@
 // Table definitions
+export { provinces } from './provinces'
 export { regions } from './regions'
 export { originCities } from './origin-cities'
 export { interests } from './interests'
@@ -11,6 +12,7 @@ export { ratings } from './ratings'
 export { newsletterSubscribers } from './newsletter'
 
 // Relations
+export { provincesRelations } from './provinces'
 export { regionsRelations } from './regions'
 export { originCitiesRelations } from './origin-cities'
 export { interestsRelations } from './interests'
@@ -23,6 +25,7 @@ export { ratingsRelations } from './ratings'
 export { newsletterSubscribersRelations } from './newsletter'
 
 // Types
+export type { Province, NewProvince } from './provinces'
 export type { Region, NewRegion } from './regions'
 export type { OriginCity, NewOriginCity } from './origin-cities'
 export type { Interest, NewInterest } from './interests'

@@ -9,7 +9,6 @@ const boolField = (defaultVal: boolean) =>
 export const regionSchema = z.object({
   name: z.string().min(1).max(100),
   slug,
-  province: z.string().min(1).max(50),
   province_code: z.string().length(2).toUpperCase(),
   center_lat: lat,
   center_lng: lng,
@@ -51,7 +50,6 @@ export const placeSchema = z.object({
   lng,
   address: z.string().max(500).default(''),
   city: z.string().max(100).default(''),
-  province: z.string().max(50).default(''),
   travel_type_id: z.string().uuid().or(z.literal('')).default('').transform(v => v || null),
   is_featured: boolField(false),
   is_active: boolField(true),

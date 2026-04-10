@@ -140,7 +140,6 @@ function placeNullables(data: Record<string, unknown>) {
     nearby_text: data.nearby_text || null,
     address: data.address || null,
     city: data.city || null,
-    province: data.province || null,
   }
 }
 export async function createPlace(_prev: ActionResult, formData: FormData): Promise<ActionResult> {

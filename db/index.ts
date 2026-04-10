@@ -13,6 +13,7 @@
 
 export type { Database } from './types'
 export type {
+  Province, NewProvince,
   Region, NewRegion,
   Place, NewPlace,
   Interest, NewInterest,

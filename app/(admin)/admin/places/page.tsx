@@ -38,7 +38,6 @@ export default async function PlacesPage() {
             <FormGroup label="Latitude"><Input name="lat" type="number" step="any" required /></FormGroup>
             <FormGroup label="Longitude"><Input name="lng" type="number" step="any" required /></FormGroup>
             <FormGroup label="City"><Input name="city" placeholder="Niagara Falls" /></FormGroup>
-            <FormGroup label="Province"><Input name="province" placeholder="Ontario" /></FormGroup>
             <FormGroup label="Address"><Input name="address" placeholder="Full address" /></FormGroup>
             <FormGroup label="Featured?">
               <Select name="is_featured"><option value="false">No</option><option value="true">Yes</option></Select>
@@ -67,7 +66,6 @@ export default async function PlacesPage() {
                 { name: 'lat', value: p.lat, type: 'number' },
                 { name: 'lng', value: p.lng, type: 'number' },
                 { name: 'city', value: p.city ?? '' },
-                { name: 'province', value: p.province ?? '' },
                 { name: 'address', value: p.address ?? '' },
                 { name: 'travel_type_id', value: p.travel_type_id ?? '', options: ttOptions },
                 { name: 'is_featured', value: String(p.is_featured), options: [{ value: 'true', label: 'Yes' }, { value: 'false', label: 'No' }] },

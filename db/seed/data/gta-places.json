@@ -8,7 +8,7 @@
     "lat": "43.0896000",
     "lng": "-79.0849000",
     "city": "Niagara Falls",
-    "province": "Ontario",
+
     "travelType": "day-trip",
     "interests": ["adventure-trips", "family-trips", "seniors-favorite"],
     "bestMonths": [5, 6, 7, 8, 9, 10]
@@ -22,7 +22,7 @@
     "lat": "45.5500000",
     "lng": "-78.5100000",
     "city": "Whitney",
-    "province": "Ontario",
+
     "travelType": "weekend-trip",
     "interests": ["adventure-trips", "camping-places", "backpacking-trips", "lakes", "birding-places", "trekkers-favorite"],
     "bestMonths": [5, 6, 7, 8, 9, 10]
@@ -36,7 +36,7 @@
     "lat": "44.5204000",
     "lng": "-80.0167000",
     "city": "Wasaga Beach",
-    "province": "Ontario",
+
     "travelType": "day-trip",
     "interests": ["beaches", "family-trips", "peaceful-places"],
     "bestMonths": [6, 7, 8, 9]
@@ -50,7 +50,7 @@
     "lat": "44.5016000",
     "lng": "-80.3161000",
     "city": "Blue Mountains",
-    "province": "Ontario",
+
     "travelType": "weekend-trip",
     "interests": ["adventure-trips", "family-trips", "holiday-resorts", "hill-stations"],
     "bestMonths": [1, 2, 3, 6, 7, 8, 9, 12]
@@ -64,7 +64,7 @@
     "lat": "45.2534000",
     "lng": "-81.6645000",
     "city": "Tobermory",
-    "province": "Ontario",
+
     "travelType": "weekend-trip",
     "interests": ["adventure-trips", "beaches", "offbeat-destinations", "peaceful-places", "trekkers-favorite"],
     "bestMonths": [6, 7, 8, 9]
@@ -78,7 +78,7 @@
     "lat": "43.9500000",
     "lng": "-77.1500000",
     "city": "Picton",
-    "province": "Ontario",
+
     "travelType": "weekend-trip",
     "interests": ["beaches", "peaceful-places", "seniors-favorite", "offbeat-destinations"],
     "bestMonths": [5, 6, 7, 8, 9, 10]
@@ -92,7 +92,7 @@
     "lat": "45.0330000",
     "lng": "-79.3000000",
     "city": "Bracebridge",
-    "province": "Ontario",
+
     "travelType": "weekend-trip",
     "interests": ["lakes", "family-trips", "holiday-resorts", "peaceful-places"],
     "bestMonths": [5, 6, 7, 8, 9]
@@ -106,7 +106,7 @@
     "lat": "43.9073000",
     "lng": "-77.2330000",
     "city": "Picton",
-    "province": "Ontario",
+
     "travelType": "day-trip",
     "interests": ["beaches", "family-trips", "camping-places", "peaceful-places"],
     "bestMonths": [6, 7, 8, 9]
@@ -120,7 +120,7 @@
     "lat": "43.2549000",
     "lng": "-79.0712000",
     "city": "Niagara-on-the-Lake",
-    "province": "Ontario",
+
     "travelType": "day-trip",
     "interests": ["peaceful-places", "seniors-favorite", "family-trips"],
     "bestMonths": [5, 6, 7, 8, 9, 10]
@@ -134,7 +134,7 @@
     "lat": "43.6835000",
     "lng": "-80.4320000",
     "city": "Elora",
-    "province": "Ontario",
+
     "travelType": "day-trip",
     "interests": ["adventure-trips", "offbeat-destinations", "peaceful-places"],
     "bestMonths": [5, 6, 7, 8, 9]
@@ -148,7 +148,7 @@
     "lat": "43.4667000",
     "lng": "-79.9167000",
     "city": "Milton",
-    "province": "Ontario",
+
     "travelType": "day-trip",
     "interests": ["adventure-trips", "trekkers-favorite", "birding-places"],
     "bestMonths": [4, 5, 6, 7, 8, 9, 10]
@@ -162,7 +162,7 @@
     "lat": "43.7071000",
     "lng": "-79.2313000",
     "city": "Toronto",
-    "province": "Ontario",
+
     "travelType": "day-trip",
     "interests": ["beaches", "peaceful-places", "family-trips", "offbeat-destinations"],
     "bestMonths": [5, 6, 7, 8, 9, 10]
@@ -176,7 +176,7 @@
     "lat": "43.8167000",
     "lng": "-79.1667000",
     "city": "Toronto",
-    "province": "Ontario",
+
     "travelType": "day-trip",
     "interests": ["family-trips", "birding-places", "trekkers-favorite", "peaceful-places"],
     "bestMonths": [4, 5, 6, 7, 8, 9, 10]
@@ -190,7 +190,7 @@
     "lat": "43.6205000",
     "lng": "-79.3782000",
     "city": "Toronto",
-    "province": "Ontario",
+
     "travelType": "day-trip",
     "interests": ["beaches", "family-trips", "peaceful-places"],
     "bestMonths": [5, 6, 7, 8, 9]
@@ -204,7 +204,7 @@
     "lat": "43.7532000",
     "lng": "-79.9486000",
     "city": "Caledon",
-    "province": "Ontario",
+
     "travelType": "day-trip",
     "interests": ["offbeat-destinations", "adventure-trips", "trekkers-favorite"],
     "bestMonths": [4, 5, 6, 7, 8, 9, 10]
@@ -218,7 +218,7 @@
     "lat": "43.2667000",
     "lng": "-79.9833000",
     "city": "Dundas",
-    "province": "Ontario",
+
     "travelType": "day-trip",
     "interests": ["adventure-trips", "trekkers-favorite", "offbeat-destinations"],
     "bestMonths": [4, 5, 6, 7, 8, 9, 10]
@@ -232,7 +232,7 @@
     "lat": "43.4720000",
     "lng": "-79.9510000",
     "city": "Milton",
-    "province": "Ontario",
+
     "travelType": "day-trip",
     "interests": ["family-trips", "peaceful-places", "offbeat-destinations", "monuments"],
     "bestMonths": [4, 5, 6, 7, 8, 9, 10]
@@ -246,7 +246,7 @@
     "lat": "44.7448000",
     "lng": "-79.8551000",
     "city": "Midland",
-    "province": "Ontario",
+
     "travelType": "day-trip",
     "interests": ["family-trips", "monuments", "seniors-favorite"],
     "bestMonths": [5, 6, 7, 8, 9, 10]
@@ -260,7 +260,7 @@
     "lat": "45.3667000",
     "lng": "-80.2000000",
     "city": "Nobel",
-    "province": "Ontario",
+
     "travelType": "weekend-trip",
     "interests": ["beaches", "camping-places", "family-trips", "lakes", "peaceful-places"],
     "bestMonths": [6, 7, 8, 9]
@@ -274,7 +274,7 @@
     "lat": "43.8430000",
     "lng": "-79.5394000",
     "city": "Vaughan",
-    "province": "Ontario",
+
     "travelType": "day-trip",
     "interests": ["amusement-parks", "family-trips"],
     "bestMonths": [5, 6, 7, 8, 9, 10]
@@ -288,7 +288,7 @@
     "lat": "44.8949000",
     "lng": "-77.2118000",
     "city": "Cloyne",
-    "province": "Ontario",
+
     "travelType": "weekend-trip",
     "interests": ["camping-places", "lakes", "adventure-trips", "offbeat-destinations", "trekkers-favorite"],
     "bestMonths": [5, 6, 7, 8, 9]
@@ -302,7 +302,7 @@
     "lat": "43.3710000",
     "lng": "-80.9822000",
     "city": "Stratford",
-    "province": "Ontario",
+
     "travelType": "day-trip",
     "interests": ["peaceful-places", "seniors-favorite", "family-trips"],
     "bestMonths": [4, 5, 6, 7, 8, 9, 10]
@@ -316,7 +316,7 @@
     "lat": "43.8000000",
     "lng": "-80.0333000",
     "city": "Caledon",
-    "province": "Ontario",
+
     "travelType": "day-trip",
     "interests": ["trekkers-favorite", "peaceful-places", "adventure-trips"],
     "bestMonths": [4, 5, 6, 9, 10]
@@ -330,7 +330,7 @@
     "lat": "44.8500000",
     "lng": "-79.9833000",
     "city": "Penetanguishene",
-    "province": "Ontario",
+
     "travelType": "weekend-trip",
     "interests": ["camping-places", "beaches", "peaceful-places", "birding-places", "offbeat-destinations"],
     "bestMonths": [6, 7, 8, 9]
@@ -344,7 +344,7 @@
     "lat": "44.3500000",
     "lng": "-76.0000000",
     "city": "Gananoque",
-    "province": "Ontario",
+
     "travelType": "weekend-trip",
     "interests": ["adventure-trips", "family-trips", "lakes", "peaceful-places", "seniors-favorite"],
     "bestMonths": [5, 6, 7, 8, 9, 10]
