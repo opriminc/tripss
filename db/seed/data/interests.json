@@ -14,5 +14,6 @@
   { "name": "Offbeat Destinations", "slug": "offbeat-destinations", "icon": "🗺️", "displayOrder": 13 },
   { "name": "Peaceful Places", "slug": "peaceful-places", "icon": "🧘", "displayOrder": 14 },
   { "name": "Trekker's Favorite", "slug": "trekkers-favorite", "icon": "🥾", "displayOrder": 15 },
-  { "name": "Seniors' Favorite", "slug": "seniors-favorite", "icon": "🌿", "displayOrder": 16 }
+  { "name": "Seniors' Favorite", "slug": "seniors-favorite", "icon": "🌿", "displayOrder": 16 },
+  { "name": "Museums", "slug": "museums", "icon": "🖼️", "displayOrder": 17 }
 ]
