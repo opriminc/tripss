@@ -8,6 +8,7 @@ import {
   interestSchema,
   travelTypeSchema,
   placeSchema,
+  placeTypeSchema,
   placeImageSchema,
   placeContactSchema,
   newsletterSubscriberSchema,
@@ -148,6 +149,26 @@ export async function updateTravelType(_prev: ActionResult, formData: FormData):
 }
 export async function deleteTravelType(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
   return adminSoftDelete('travel_types', formData, '/admin/travel-types')
+}
+
+// ============================================
+// PLACE TYPES
+// ============================================
+export async function createPlaceType(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
+  return adminAction({
+    formData, schema: placeTypeSchema, path: '/admin/place-types',
+    operation: (db, data) => db.from('place_types').insert({ ...data, icon: data.icon || null, description: data.description || null }),
+  })
+}
+export async function updatePlaceType(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
+  const id = formData.get('id') as string
+  return adminAction({
+    formData, schema: placeTypeSchema, path: '/admin/place-types',
+    operation: (db, data) => db.from('place_types').update({ ...data, icon: data.icon || null, description: data.description || null }).eq('id', id),
+  })
+}
+export async function deletePlaceType(_prev: ActionResult, formData: FormData): Promise<ActionResult> {
+  return adminSoftDelete('place_types', formData, '/admin/place-types')
 }
 
 // ============================================

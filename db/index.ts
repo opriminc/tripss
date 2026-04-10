@@ -15,6 +15,7 @@ export type { Database } from './types'
 export type {
   Province, NewProvince,
   Region, NewRegion,
+  PlaceType, NewPlaceType,
   Place, NewPlace,
   Interest, NewInterest,
   TravelType, NewTravelType,

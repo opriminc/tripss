@@ -241,6 +241,39 @@ export type Database = {
           created_at?: string
         }
       }
+      place_types: {
+        Row: {
+          id: string
+          name: string
+          slug: string
+          icon: string | null
+          description: string | null
+          display_order: number
+          is_active: boolean
+          created_at: string
+          deleted_at: string | null
+        }
+        Insert: {
+          id?: string
+          name: string
+          slug: string
+          icon?: string | null
+          description?: string | null
+          display_order?: number
+          is_active?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          slug?: string
+          icon?: string | null
+          description?: string | null
+          display_order?: number
+          is_active?: boolean
+          created_at?: string
+        }
+      }
       places: {
         Row: {
           id: string
@@ -256,6 +289,7 @@ export type Database = {
           address: string | null
           city: string | null
           postal_code: string | null
+          place_type_id: string | null
           travel_type_id: string | null
           avg_rating: number
           rating_count: number

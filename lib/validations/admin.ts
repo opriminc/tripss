@@ -41,6 +41,15 @@ export const travelTypeSchema = z.object({
   is_active: boolField(true),
 })
 
+export const placeTypeSchema = z.object({
+  name: z.string().min(1).max(100),
+  slug,
+  icon: z.string().max(10).default(''),
+  description: z.string().max(500).default(''),
+  display_order: z.coerce.number().int().min(0).default(0),
+  is_active: boolField(true),
+})
+
 export const placeSchema = z.object({
   region_id: z.string().uuid(),
   name: z.string().min(1).max(255),
@@ -52,6 +61,7 @@ export const placeSchema = z.object({
   lng,
   address: z.string().max(500).default(''),
   city: z.string().max(100).default(''),
+  place_type_id: z.string().uuid().or(z.literal('')).default('').transform(v => v || null),
   travel_type_id: z.string().uuid().or(z.literal('')).default('').transform(v => v || null),
   is_featured: boolField(false),
   is_active: boolField(true),

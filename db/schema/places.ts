@@ -1,6 +1,7 @@
 import { pgTable, uuid, varchar, text, decimal, boolean, integer, timestamp, index, uniqueIndex, customType } from 'drizzle-orm/pg-core'
 import { relations, type InferSelectModel, type InferInsertModel } from 'drizzle-orm'
 import { regions } from './regions'
+import { placeTypes } from './place-types'
 import { travelTypes } from './travel-types'
 import { placeImages } from './place-images'
 import { placeContacts } from './place-contacts'
@@ -29,6 +30,7 @@ export const places = pgTable('places', {
   address: text('address'),
   city: varchar('city', { length: 100 }),
   postalCode: varchar('postal_code', { length: 10 }),
+  placeTypeId: uuid('place_type_id').references(() => placeTypes.id, { onDelete: 'set null', onUpdate: 'cascade' }),
   travelTypeId: uuid('travel_type_id').references(() => travelTypes.id, { onDelete: 'set null', onUpdate: 'cascade' }),
   avgRating: decimal('avg_rating', { precision: 2, scale: 1 }).notNull().default('0.0').$type<number>(),
   ratingCount: integer('rating_count').notNull().default(0),
@@ -51,6 +53,10 @@ export const placesRelations = relations(places, ({ one, many }) => ({
   region: one(regions, {
     fields: [places.regionId],
     references: [regions.id],
+  }),
+  placeType: one(placeTypes, {
+    fields: [places.placeTypeId],
+    references: [placeTypes.id],
   }),
   travelType: one(travelTypes, {
     fields: [places.travelTypeId],
